@@ -7,13 +7,12 @@ class Crud extends MY_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model($this->model);
-		$this->load->library('phpass'); 
+		//$this->load->library('phpass');
     }
     
     public function create(){
-		if($this->input->post('submit')){
-			$data = $this->{$this->model}->create_process($this->input->post()); 	
-		}
+		$data = array('email'      => $this->input->post('email'),
+	                  'password'   => $this->input->post('pass'));	
 		parent::_create(array('data'=>@$data));
     }
 
@@ -26,8 +25,7 @@ class Crud extends MY_Controller {
     
     public function update($id){
         $data = array('email'      => $this->input->post('email'),
-	                  'password'   => $this->input->post('pass'));				
-		
+	                  'password'   => $this->input->post('pass'));	
 		//form update data 
 		$update_data = $this->{$this->model}->get_by(array('fields'=>'id,email,password,status','refer'=>$id));			  
 		$view_data = array(array('var_name'=>'form_data','value'=>$update_data));
